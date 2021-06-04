@@ -8,5 +8,40 @@ provider:
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
   profile: todo-List-SeverlessUser
+  environment:
+    myDynamoDBTable1: ${self:custom.myDynamoDBTable1}
+    myDynamoDBTable2: ${self:custom.myDynamoDBTable2}
 
 
+custom:
+  myDynamoDBTable1: todoLists
+  myDynamoDBTable2: users
+
+resources:
+  Resources:
+    myDynamoDBTable1: 
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: ${self:custom.myDynamoDBTable1}
+        AttributeDefinitions:
+          - AttributeName: id_Note
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id_Note
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    myDynamoDBTable2:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.myDynamoDBTable2}
+        AttributeDefinitions:
+          - AttributeName: id_User
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id_User
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+        
+
+  

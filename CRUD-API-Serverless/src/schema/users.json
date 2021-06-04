@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "users",
+    "properties": {
+        "id_User": {
+            "type": "string"
+        },
+        "userName": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string"
+        },
+        "password": {
+            "type": "string"
+        },
+        "confirmPassword": {
+            "type": "string"
+        }
+    }
+}

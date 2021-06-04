@@ -9,6 +9,10 @@
       "runtime": "nodejs12.x",
       "lambdaHashingVersion": "20201221",
       "profile": "todo-List-SeverlessUser",
+      "environment": {
+        "myDynamoDBTable1": "todoLists",
+        "myDynamoDBTable2": "users"
+      },
       "stage": "dev",
       "region": "us-east-1",
       "versionFunctions": true,
@@ -85,122 +89,42 @@
               }
             }
           },
-          "HelloLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
+          "myDynamoDBTable1": {
+            "Type": "AWS::DynamoDB::Table",
             "Properties": {
-              "LogGroupName": "/aws/lambda/crud-api-serverless-dev-hello"
-            }
-          },
-          "IamRoleLambdaExecution": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-              "AssumeRolePolicyDocument": {
-                "Version": "2012-10-17",
-                "Statement": [
-                  {
-                    "Effect": "Allow",
-                    "Principal": {
-                      "Service": [
-                        "lambda.amazonaws.com"
-                      ]
-                    },
-                    "Action": [
-                      "sts:AssumeRole"
-                    ]
-                  }
-                ]
-              },
-              "Policies": [
+              "TableName": "todoLists",
+              "AttributeDefinitions": [
                 {
-                  "PolicyName": {
-                    "Fn::Join": [
-                      "-",
-                      [
-                        "crud-api-serverless",
-                        "dev",
-                        "lambda"
-                      ]
-                    ]
-                  },
-                  "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "logs:CreateLogStream",
-                          "logs:CreateLogGroup"
-                        ],
-                        "Resource": [
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/crud-api-serverless-dev*:*"
-                          }
-                        ]
-                      },
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "logs:PutLogEvents"
-                        ],
-                        "Resource": [
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/crud-api-serverless-dev*:*:*"
-                          }
-                        ]
-                      }
-                    ]
-                  }
+                  "AttributeName": "id_Note",
+                  "AttributeType": "S"
                 }
               ],
-              "Path": "/",
-              "RoleName": {
-                "Fn::Join": [
-                  "-",
-                  [
-                    "crud-api-serverless",
-                    "dev",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    "lambdaRole"
-                  ]
-                ]
-              }
+              "KeySchema": [
+                {
+                  "AttributeName": "id_Note",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST"
             }
           },
-          "HelloLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
+          "myDynamoDBTable2": {
+            "Type": "AWS::DynamoDB::Table",
             "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/crud-api-serverless/dev/1622830779963-2021-06-04T18:19:39.963Z/crud-api-serverless.zip"
-              },
-              "Handler": "handler.hello",
-              "Runtime": "nodejs12.x",
-              "FunctionName": "crud-api-serverless-dev-hello",
-              "MemorySize": 1024,
-              "Timeout": 6,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              }
-            },
-            "DependsOn": [
-              "HelloLogGroup"
-            ]
-          },
-          "HelloLambdaVersionK9ZNYwKeA52TCqSP7gqcVxnrFnbpytEvIYryS6ib0": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "HelloLambdaFunction"
-              },
-              "CodeSha256": "N2T+ufoquBzhkaDxKjrhdTQ+IHhfQcb5RZdGTSBQ8j0="
+              "TableName": "users",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id_User",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id_User",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST"
             }
           }
         },
@@ -211,15 +135,6 @@
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-ServerlessDeploymentBucketName"
-            }
-          },
-          "HelloLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "HelloLambdaVersionK9ZNYwKeA52TCqSP7gqcVxnrFnbpytEvIYryS6ib0"
-            },
-            "Export": {
-              "Name": "sls-crud-api-serverless-dev-HelloLambdaFunctionQualifiedArn"
             }
           }
         }
@@ -305,22 +220,56 @@
             }
           }
         }
-      },
-      "vpc": {}
+      }
+    },
+    "custom": {
+      "myDynamoDBTable1": "todoLists",
+      "myDynamoDBTable2": "users"
     },
     "pluginsData": {},
-    "functions": {
-      "hello": {
-        "handler": "handler.hello",
-        "events": [],
-        "name": "crud-api-serverless-dev-hello",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs12.x",
-        "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionK9ZNYwKeA52TCqSP7gqcVxnrFnbpytEvIYryS6ib0"
-      }
+    "functions": {},
+    "resources": {
+      "Resources": {
+        "myDynamoDBTable1": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "todoLists",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id_Note",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id_Note",
+                "KeyType": "HASH"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST"
+          }
+        },
+        "myDynamoDBTable2": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "users",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id_User",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id_User",
+                "KeyType": "HASH"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST"
+          }
+        }
+      },
+      "Outputs": {}
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -333,15 +282,17 @@
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
-      "functions": {
-        "$ref": "$[\"service\"][\"functions\"]"
+      "custom": {
+        "$ref": "$[\"service\"][\"custom\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
       }
     },
-    "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/Users/hkhanhlam99/Desktop/Repo/Todo-list-cross-platform/CRUD-API-Serverless/.serverless/crud-api-serverless.zip"
+    "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/crud-api-serverless/dev/1622830779963-2021-06-04T18:19:39.963Z",
-    "artifact": "crud-api-serverless.zip"
+    "artifactDirectoryName": "serverless/crud-api-serverless/dev/1622850039746-2021-06-04T23:40:39.746Z",
+    "artifact": ""
   }
 }

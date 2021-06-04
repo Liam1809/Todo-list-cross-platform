@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "todoLists",
+    "properties": {
+        "id_Note": {
+            "type": "string"
+        },
+        "userId": {
+            "type": "string"
+        },
+        "note": {
+            "type": "string"
+        },
+        "createdAt": {
+            "type": "string"
+        }
+    }
+}
