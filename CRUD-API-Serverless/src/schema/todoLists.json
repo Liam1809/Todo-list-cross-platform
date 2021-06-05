@@ -1,7 +1,11 @@
 {
+    "definitions": {},
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "title": "todoLists",
+    "title": "todoLists schema",
+    "required": [
+        "note"
+    ],
     "properties": {
         "id_Note": {
             "type": "string"

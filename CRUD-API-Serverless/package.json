@@ -1,1 +1,16 @@
-{"name":"crud-api-serverless","description":"","version":"0.1.0"}
+{
+  "name": "crud-api-serverless",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Liam Ha",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.922.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {},
+  "description": ""
+}

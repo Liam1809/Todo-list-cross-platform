@@ -11,11 +11,57 @@ provider:
   environment:
     myDynamoDBTable1: ${self:custom.myDynamoDBTable1}
     myDynamoDBTable2: ${self:custom.myDynamoDBTable2}
-
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: '*'
 
 custom:
   myDynamoDBTable1: todoLists
   myDynamoDBTable2: users
+
+functions:
+  createNote:
+    handler: src/lambdas/todoLists/createNote.handler
+    events:
+      - http:
+          path: todoLists/create-note
+          method: POST
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(src/schema/todoLists.json)}
+  getAllNotes:
+    handler: src/lambdas/todoLists/getAllNotes.handler
+    events:
+      - http:
+          path: todoLists/get-notes
+          method: GET
+          cors: true
+  deleteNote:
+    handler: src/lambdas/todoLists/deleteNote.handler
+    events:
+      - http:
+          path: todoLists/delete-note/{id_Note}
+          method: DELETE
+          cors: true
+  updateNote:
+    handler: src/lambdas/todoLists/updateNote.handler
+    events:
+      - http:
+          path: todoLists/update-note/{id_Note}
+          method: PATCH
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(src/schema/todoLists.json)}
+
+
+
+
 
 resources:
   Resources:
