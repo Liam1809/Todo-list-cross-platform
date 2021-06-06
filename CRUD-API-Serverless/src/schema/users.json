@@ -1,15 +1,17 @@
 {
+    "definitions": {},
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "title": "users",
+    "required": [
+        "userName",
+        "password"
+    ],
     "properties": {
         "id_User": {
             "type": "string"
         },
         "userName": {
-            "type": "string"
-        },
-        "email": {
             "type": "string"
         },
         "password": {

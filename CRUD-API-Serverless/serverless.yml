@@ -58,9 +58,27 @@ functions:
           request:
             schemas:
               application/json: ${file(src/schema/todoLists.json)}
+  # login:
+  #   handler: src/lambdas/users/login.handler
+  #   events:
+  #     - http:
+  #         path: users/login
+  #         method: POST
+  #         cors: true
+  #         request:
+  #           schemas:
+  #             application/json: ${file(src/schema/users.json)}
 
-
-
+  register: 
+    handler: src/lambdas/users/register.handler
+    events:
+      - http:
+          path: users/register
+          method: POST
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(src/schema/users.json)}
 
 
 resources:
@@ -76,15 +94,16 @@ resources:
           - AttributeName: id_Note
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+        
     myDynamoDBTable2:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.myDynamoDBTable2}
         AttributeDefinitions:
-          - AttributeName: id_User
+          - AttributeName: userName
             AttributeType: S
         KeySchema:
-          - AttributeName: id_User
+          - AttributeName: userName
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
 

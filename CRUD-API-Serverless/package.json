@@ -9,8 +9,9 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.922.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^8.3.2"
   },
-  "devDependencies": {},
   "description": ""
 }
