@@ -1,4 +1,3 @@
-
 service: crud-api-serverless
 
 frameworkVersion: '2'
@@ -11,6 +10,7 @@ provider:
   environment:
     myDynamoDBTable1: ${self:custom.myDynamoDBTable1}
     myDynamoDBTable2: ${self:custom.myDynamoDBTable2}
+    JWT_SECRET: ${self:custom.secret.jwtSecret}
   iam:
     role:
       statements:
@@ -22,6 +22,7 @@ provider:
 custom:
   myDynamoDBTable1: todoLists
   myDynamoDBTable2: users
+  secret: ${file(secret.json)}
 
 functions:
   createNote:
@@ -58,17 +59,16 @@ functions:
           request:
             schemas:
               application/json: ${file(src/schema/todoLists.json)}
-  # login:
-  #   handler: src/lambdas/users/login.handler
-  #   events:
-  #     - http:
-  #         path: users/login
-  #         method: POST
-  #         cors: true
-  #         request:
-  #           schemas:
-  #             application/json: ${file(src/schema/users.json)}
-
+  login:
+    handler: src/lambdas/users/login.handler
+    events:
+      - http:
+          path: users/login
+          method: POST
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(src/schema/users.json)}
   register: 
     handler: src/lambdas/users/register.handler
     events:
@@ -79,7 +79,6 @@ functions:
           request:
             schemas:
               application/json: ${file(src/schema/users.json)}
-
 
 resources:
   Resources:

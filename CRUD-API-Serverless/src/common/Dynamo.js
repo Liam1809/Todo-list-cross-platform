@@ -58,34 +58,35 @@ const Dynamo = {
 
         return JSON.stringify(updatedData);
     },
-    login: async () => {
+    login: async (data, tableName) => {
+        const existingUser = await checkExistingUser(data, tableName);
 
+        // if user not register
+        if (!existingUser) return { message1: "USER NOT REGISTER" };
+
+        // if user exist then login
+        const checkPassword = bcrypt.compareSync(data.password, existingUser[0].hashPassword);
+
+        // if password is not matched
+        if (!checkPassword) return { message2: "User or password not correct" };
+
+        return {
+            "userName": existingUser.userName,
+            "id_User": existingUser.id_User
+        };
     },
     register: async (data, tableName) => {
 
-        // checking user exist
-        const queryUserParams = {
-            TableName: tableName,
-            KeyConditionExpression: '#username = :username',
-            ExpressionAttributeNames: {
-                '#username': 'userName'
-            },
-            ExpressionAttributeValues: {
-                ':username': data.userName
-            }
-        };
-
-        const existingUser = await documentClient.query(queryUserParams).promise();
+        const existingUsers = await checkExistingUser(data, tableName);
 
         // if user exist
-        if (existingUser.Items.length === 1 && existingUser.Items[0].userName === data.userName) return { message: "USER ALREADY EXISTS" };
+        if (existingUsers.length === 1 && existingUsers[0].userName === data.userName) return { message: "USER ALREADY EXISTS" };
 
         // if user not exist then register
         const Item = {
             "userName": data.userName,
             "id_User": uuid(),
-            "password": bcrypt.hashSync(data.password, 2),
-            "confirmPassword": bcrypt.hashSync(data.password, 2),
+            "hashPassword": bcrypt.hashSync(data.password, 2)
         };
 
         const params = {
@@ -97,6 +98,22 @@ const Dynamo = {
 
         return Item;
     }
+};
+
+const checkExistingUser = async (data, tableName) => {
+    // checking user exist
+    const queryUserParams = {
+        TableName: tableName,
+        KeyConditionExpression: '#username = :username',
+        ExpressionAttributeNames: {
+            '#username': 'userName'
+        },
+        ExpressionAttributeValues: {
+            ':username': data.userName
+        }
+    };
+
+    return (await documentClient.query(queryUserParams).promise()).Items;
 };
 
 module.exports = Dynamo;

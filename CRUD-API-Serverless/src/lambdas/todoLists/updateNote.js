@@ -1,7 +1,6 @@
 'use strict';
 const responses = require("../../common/API-Responses");
 const Dynamo = require('../../common/Dynamo');
-const tableName1 = process.env.myDynamoDBTable1;
 // TODO-LIST
 //ENDPOINTS FOR CRUD IMPLEMENTATION
 
@@ -17,7 +16,7 @@ exports.handler = async (event) => {
         const idNote = event.pathParameters.id_Note;
         const updatedNote = JSON.parse(event.body);
 
-        const updatedNoteDB = await Dynamo.update(idNote, updatedNote, tableName1);
+        const updatedNoteDB = await Dynamo.update(idNote, updatedNote, process.env.myDynamoDBTable1);
 
         return responses._200(updatedNoteDB);
 

@@ -1,7 +1,6 @@
 'use strict';
 const responses = require("../../common/API-Responses");
 const Dynamo = require('../../common/Dynamo');
-const tableName1 = process.env.myDynamoDBTable1;
 // TODO-LIST
 //ENDPOINTS FOR CRUD IMPLEMENTATION
 
@@ -14,7 +13,7 @@ exports.handler = async (event) => {
 
         const idNote = event.pathParameters.id_Note;
 
-        const noteDB = await Dynamo.delete(idNote, tableName1);
+        const noteDB = await Dynamo.delete(idNote, process.env.myDynamoDBTable1);
 
         return responses._204(noteDB);
 

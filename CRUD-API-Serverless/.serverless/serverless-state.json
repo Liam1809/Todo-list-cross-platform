@@ -11,7 +11,8 @@
       "profile": "todo-List-SeverlessUser",
       "environment": {
         "myDynamoDBTable1": "todoLists",
-        "myDynamoDBTable2": "users"
+        "myDynamoDBTable2": "users",
+        "JWT_SECRET": "HopeThisIsSecure"
       },
       "iam": {
         "role": {
@@ -126,6 +127,12 @@
               "LogGroupName": "/aws/lambda/crud-api-serverless-dev-updateNote"
             }
           },
+          "LoginLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/crud-api-serverless-dev-login"
+            }
+          },
           "RegisterLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -219,7 +226,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z/crud-api-serverless.zip"
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
               },
               "Handler": "src/lambdas/todoLists/createNote.handler",
               "Runtime": "nodejs12.x",
@@ -229,7 +236,8 @@
               "Environment": {
                 "Variables": {
                   "myDynamoDBTable1": "todoLists",
-                  "myDynamoDBTable2": "users"
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
                 }
               },
               "Role": {
@@ -250,7 +258,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z/crud-api-serverless.zip"
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
               },
               "Handler": "src/lambdas/todoLists/getAllNotes.handler",
               "Runtime": "nodejs12.x",
@@ -260,7 +268,8 @@
               "Environment": {
                 "Variables": {
                   "myDynamoDBTable1": "todoLists",
-                  "myDynamoDBTable2": "users"
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
                 }
               },
               "Role": {
@@ -281,7 +290,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z/crud-api-serverless.zip"
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
               },
               "Handler": "src/lambdas/todoLists/deleteNote.handler",
               "Runtime": "nodejs12.x",
@@ -291,7 +300,8 @@
               "Environment": {
                 "Variables": {
                   "myDynamoDBTable1": "todoLists",
-                  "myDynamoDBTable2": "users"
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
                 }
               },
               "Role": {
@@ -312,7 +322,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z/crud-api-serverless.zip"
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
               },
               "Handler": "src/lambdas/todoLists/updateNote.handler",
               "Runtime": "nodejs12.x",
@@ -322,7 +332,8 @@
               "Environment": {
                 "Variables": {
                   "myDynamoDBTable1": "todoLists",
-                  "myDynamoDBTable2": "users"
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
                 }
               },
               "Role": {
@@ -336,6 +347,38 @@
               "UpdateNoteLogGroup"
             ]
           },
+          "LoginLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
+              },
+              "Handler": "src/lambdas/users/login.handler",
+              "Runtime": "nodejs12.x",
+              "FunctionName": "crud-api-serverless-dev-login",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "myDynamoDBTable1": "todoLists",
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "LoginLogGroup"
+            ]
+          },
           "RegisterLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -343,7 +386,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z/crud-api-serverless.zip"
+                "S3Key": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z/crud-api-serverless.zip"
               },
               "Handler": "src/lambdas/users/register.handler",
               "Runtime": "nodejs12.x",
@@ -353,7 +396,8 @@
               "Environment": {
                 "Variables": {
                   "myDynamoDBTable1": "todoLists",
-                  "myDynamoDBTable2": "users"
+                  "myDynamoDBTable2": "users",
+                  "JWT_SECRET": "HopeThisIsSecure"
                 }
               },
               "Role": {
@@ -367,54 +411,64 @@
               "RegisterLogGroup"
             ]
           },
-          "CreateNoteLambdaVersione79JqNAupGfqjT2BuSLqYo6AMt2aIfauyPBMtPGY30": {
+          "CreateNoteLambdaVersion4wodhMhzAS0gDlAWZrxWsBOMfazGegm8WHe1rkwJpIE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateNoteLambdaFunction"
               },
-              "CodeSha256": "BSlX9wR6LB5/LO+dQgT7ur7bnk+/J6tZ3FwQtTgyH/I="
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
             }
           },
-          "GetAllNotesLambdaVersionrGs6dIChbEaRu1bUkAn0aiEAK8HoekiufWf66fHOY": {
+          "GetAllNotesLambdaVersion8plmyvgtDXg3k4DjoxIrlltNHd5OyntPUY7cF1sW4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAllNotesLambdaFunction"
               },
-              "CodeSha256": "BSlX9wR6LB5/LO+dQgT7ur7bnk+/J6tZ3FwQtTgyH/I="
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
             }
           },
-          "DeleteNoteLambdaVersionHooiYcn6KbhQPmDvOQ63TxhgYDdMCsoZa59IzwJwmI": {
+          "DeleteNoteLambdaVersionpBfZ5AW1XjoGP4T2vacWGJe2Fh9yj1Y0IRBuRfqQc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteNoteLambdaFunction"
               },
-              "CodeSha256": "BSlX9wR6LB5/LO+dQgT7ur7bnk+/J6tZ3FwQtTgyH/I="
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
             }
           },
-          "UpdateNoteLambdaVersionjLxP4bvnkCzQe9foepSqF2GAgcOgVjIsSKBlg7mlE": {
+          "UpdateNoteLambdaVersionbeNgfAum2FXLneLGbnVBEJBbl8AqZ9Xbu0aRWj1aXU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateNoteLambdaFunction"
               },
-              "CodeSha256": "BSlX9wR6LB5/LO+dQgT7ur7bnk+/J6tZ3FwQtTgyH/I="
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
             }
           },
-          "RegisterLambdaVersionFzvHPt08fhmW3TkqJ3jgwV3kP12QtCeAIiqMz7qkUg": {
+          "LoginLambdaVersionhdWFgzDQBIt49RtR9hNocAD4vo3yZG2a6CQ4gHuA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "LoginLambdaFunction"
+              },
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
+            }
+          },
+          "RegisterLambdaVersionoTtt4MTIRNr4dvMjqdHjeJAYyh31SUh1dau00AulA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "RegisterLambdaFunction"
               },
-              "CodeSha256": "BSlX9wR6LB5/LO+dQgT7ur7bnk+/J6tZ3FwQtTgyH/I="
+              "CodeSha256": "tAU1OZWAeZouQHyOTibIvp7y7+LoPWhM3YBuRqPBFMM="
             }
           },
           "ApiGatewayRestApi": {
@@ -526,6 +580,18 @@
                 ]
               },
               "PathPart": "users",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceUsersLogin": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceUsers"
+              },
+              "PathPart": "login",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -717,6 +783,51 @@
               },
               "ResourceId": {
                 "Ref": "ApiGatewayResourceTodolistsUpdateDashnoteIdnoteVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodUsersLoginOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceUsersLogin"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -956,6 +1067,57 @@
               }
             }
           },
+          "ApiGatewayMethodUsersLoginPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceUsersLogin"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "LoginLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayCrudapiserverlessRequestValidator"
+              },
+              "RequestModels": {
+                "application/json": {
+                  "Ref": "ApiGatewayMethodUsersLoginPostApplicationJsonModel"
+                }
+              }
+            }
+          },
           "ApiGatewayMethodUsersRegisterPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -1082,6 +1244,39 @@
               }
             }
           },
+          "ApiGatewayMethodUsersLoginPostApplicationJsonModel": {
+            "Type": "AWS::ApiGateway::Model",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ContentType": "application/json",
+              "Schema": {
+                "definitions": {},
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "title": "users",
+                "required": [
+                  "userName",
+                  "password"
+                ],
+                "properties": {
+                  "id_User": {
+                    "type": "string"
+                  },
+                  "userName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
           "ApiGatewayMethodUsersRegisterPostApplicationJsonModel": {
             "Type": "AWS::ApiGateway::Model",
             "Properties": {
@@ -1115,7 +1310,7 @@
               }
             }
           },
-          "ApiGatewayDeployment1622984352260": {
+          "ApiGatewayDeployment1623074785451": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1128,11 +1323,13 @@
               "ApiGatewayMethodTodolistsGetDashnotesOptions",
               "ApiGatewayMethodTodolistsDeleteDashnoteIdnoteVarOptions",
               "ApiGatewayMethodTodolistsUpdateDashnoteIdnoteVarOptions",
+              "ApiGatewayMethodUsersLoginOptions",
               "ApiGatewayMethodUsersRegisterOptions",
               "ApiGatewayMethodTodolistsCreateDashnotePost",
               "ApiGatewayMethodTodolistsGetDashnotesGet",
               "ApiGatewayMethodTodolistsDeleteDashnoteIdnoteVarDelete",
               "ApiGatewayMethodTodolistsUpdateDashnoteIdnoteVarPatch",
+              "ApiGatewayMethodUsersLoginPost",
               "ApiGatewayMethodUsersRegisterPost"
             ]
           },
@@ -1284,6 +1481,43 @@
               }
             }
           },
+          "LoginLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoginLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
           "RegisterLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
@@ -1372,7 +1606,7 @@
           "CreateNoteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateNoteLambdaVersione79JqNAupGfqjT2BuSLqYo6AMt2aIfauyPBMtPGY30"
+              "Ref": "CreateNoteLambdaVersion4wodhMhzAS0gDlAWZrxWsBOMfazGegm8WHe1rkwJpIE"
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-CreateNoteLambdaFunctionQualifiedArn"
@@ -1381,7 +1615,7 @@
           "GetAllNotesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAllNotesLambdaVersionrGs6dIChbEaRu1bUkAn0aiEAK8HoekiufWf66fHOY"
+              "Ref": "GetAllNotesLambdaVersion8plmyvgtDXg3k4DjoxIrlltNHd5OyntPUY7cF1sW4"
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-GetAllNotesLambdaFunctionQualifiedArn"
@@ -1390,7 +1624,7 @@
           "DeleteNoteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteNoteLambdaVersionHooiYcn6KbhQPmDvOQ63TxhgYDdMCsoZa59IzwJwmI"
+              "Ref": "DeleteNoteLambdaVersionpBfZ5AW1XjoGP4T2vacWGJe2Fh9yj1Y0IRBuRfqQc"
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-DeleteNoteLambdaFunctionQualifiedArn"
@@ -1399,16 +1633,25 @@
           "UpdateNoteLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateNoteLambdaVersionjLxP4bvnkCzQe9foepSqF2GAgcOgVjIsSKBlg7mlE"
+              "Ref": "UpdateNoteLambdaVersionbeNgfAum2FXLneLGbnVBEJBbl8AqZ9Xbu0aRWj1aXU"
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-UpdateNoteLambdaFunctionQualifiedArn"
             }
           },
+          "LoginLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoginLambdaVersionhdWFgzDQBIt49RtR9hNocAD4vo3yZG2a6CQ4gHuA"
+            },
+            "Export": {
+              "Name": "sls-crud-api-serverless-dev-LoginLambdaFunctionQualifiedArn"
+            }
+          },
           "RegisterLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "RegisterLambdaVersionFzvHPt08fhmW3TkqJ3jgwV3kP12QtCeAIiqMz7qkUg"
+              "Ref": "RegisterLambdaVersionoTtt4MTIRNr4dvMjqdHjeJAYyh31SUh1dau00AulA"
             },
             "Export": {
               "Name": "sls-crud-api-serverless-dev-RegisterLambdaFunctionQualifiedArn"
@@ -1528,7 +1771,10 @@
     },
     "custom": {
       "myDynamoDBTable1": "todoLists",
-      "myDynamoDBTable2": "users"
+      "myDynamoDBTable2": "users",
+      "secret": {
+        "jwtSecret": "HopeThisIsSecure"
+      }
     },
     "pluginsData": {},
     "functions": {
@@ -1575,7 +1821,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "CreateNoteLambdaVersione79JqNAupGfqjT2BuSLqYo6AMt2aIfauyPBMtPGY30"
+        "versionLogicalId": "CreateNoteLambdaVersion4wodhMhzAS0gDlAWZrxWsBOMfazGegm8WHe1rkwJpIE"
       },
       "getAllNotes": {
         "handler": "src/lambdas/todoLists/getAllNotes.handler",
@@ -1613,7 +1859,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetAllNotesLambdaVersionrGs6dIChbEaRu1bUkAn0aiEAK8HoekiufWf66fHOY"
+        "versionLogicalId": "GetAllNotesLambdaVersion8plmyvgtDXg3k4DjoxIrlltNHd5OyntPUY7cF1sW4"
       },
       "deleteNote": {
         "handler": "src/lambdas/todoLists/deleteNote.handler",
@@ -1651,7 +1897,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "DeleteNoteLambdaVersionHooiYcn6KbhQPmDvOQ63TxhgYDdMCsoZa59IzwJwmI"
+        "versionLogicalId": "DeleteNoteLambdaVersionpBfZ5AW1XjoGP4T2vacWGJe2Fh9yj1Y0IRBuRfqQc"
       },
       "updateNote": {
         "handler": "src/lambdas/todoLists/updateNote.handler",
@@ -1696,7 +1942,52 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "UpdateNoteLambdaVersionjLxP4bvnkCzQe9foepSqF2GAgcOgVjIsSKBlg7mlE"
+        "versionLogicalId": "UpdateNoteLambdaVersionbeNgfAum2FXLneLGbnVBEJBbl8AqZ9Xbu0aRWj1aXU"
+      },
+      "login": {
+        "handler": "src/lambdas/users/login.handler",
+        "events": [
+          {
+            "http": {
+              "path": "users/login",
+              "method": "post",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "schemas": {
+                  "application/json": {
+                    "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ApiGatewayMethodUsersLoginPostApplicationJsonModel\"][\"Properties\"][\"Schema\"]"
+                  }
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "crud-api-serverless-dev-login",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "LoginLambdaVersionhdWFgzDQBIt49RtR9hNocAD4vo3yZG2a6CQ4gHuA"
       },
       "register": {
         "handler": "src/lambdas/users/register.handler",
@@ -1741,7 +2032,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "RegisterLambdaVersionFzvHPt08fhmW3TkqJ3jgwV3kP12QtCeAIiqMz7qkUg"
+        "versionLogicalId": "RegisterLambdaVersionoTtt4MTIRNr4dvMjqdHjeJAYyh31SUh1dau00AulA"
       }
     },
     "resources": {
@@ -1812,7 +2103,7 @@
     "artifact": "/Users/hkhanhlam99/Desktop/Repo/Todo-list-cross-platform/CRUD-API-Serverless/.serverless/crud-api-serverless.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/crud-api-serverless/dev/1622984355436-2021-06-06T12:59:15.436Z",
+    "artifactDirectoryName": "serverless/crud-api-serverless/dev/1623074788596-2021-06-07T14:06:28.596Z",
     "artifact": "crud-api-serverless.zip"
   }
 }
