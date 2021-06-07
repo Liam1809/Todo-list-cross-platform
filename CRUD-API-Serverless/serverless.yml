@@ -25,6 +25,8 @@ custom:
   secret: ${file(secret.json)}
 
 functions:
+  Auth:
+    handler: src/middleware/auth.handlers
   createNote:
     handler: src/lambdas/todoLists/createNote.handler
     events:
@@ -35,6 +37,8 @@ functions:
           request:
             schemas:
               application/json: ${file(src/schema/todoLists.json)}
+          authorizer:
+            name: Auth
   getAllNotes:
     handler: src/lambdas/todoLists/getAllNotes.handler
     events:
@@ -49,6 +53,8 @@ functions:
           path: todoLists/delete-note/{id_Note}
           method: DELETE
           cors: true
+          authorizer:
+            name: Auth
   updateNote:
     handler: src/lambdas/todoLists/updateNote.handler
     events:
@@ -59,6 +65,8 @@ functions:
           request:
             schemas:
               application/json: ${file(src/schema/todoLists.json)}
+          authorizer:
+            name: Auth
   login:
     handler: src/lambdas/users/login.handler
     events:
