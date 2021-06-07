@@ -204,9 +204,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
-        "Handler": "src/middleware/auth.handlers",
+        "Handler": "src/middleware/auth.handler",
         "Runtime": "nodejs12.x",
         "FunctionName": "crud-api-serverless-dev-Auth",
         "MemorySize": 1024,
@@ -236,7 +236,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/todoLists/createNote.handler",
         "Runtime": "nodejs12.x",
@@ -268,7 +268,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/todoLists/getAllNotes.handler",
         "Runtime": "nodejs12.x",
@@ -300,7 +300,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/todoLists/deleteNote.handler",
         "Runtime": "nodejs12.x",
@@ -332,7 +332,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/todoLists/updateNote.handler",
         "Runtime": "nodejs12.x",
@@ -364,7 +364,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/users/login.handler",
         "Runtime": "nodejs12.x",
@@ -396,7 +396,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/crud-api-serverless/dev/1623081891502-2021-06-07T16:04:51.502Z/crud-api-serverless.zip"
+          "S3Key": "serverless/crud-api-serverless/dev/1623082218374-2021-06-07T16:10:18.374Z/crud-api-serverless.zip"
         },
         "Handler": "src/lambdas/users/register.handler",
         "Runtime": "nodejs12.x",
@@ -421,7 +421,7 @@
         "RegisterLogGroup"
       ]
     },
-    "AuthLambdaVersionkPQn9aNlzv744PPyyWbCxyCH5qH0kjUjimx6EwTrw1s": {
+    "AuthLambdaVersion0neg4PIKT0GbL4TwuRtOJJU25qD0ppqU3Q5vwEpR1dk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
@@ -1377,7 +1377,7 @@
         "Type": "TOKEN"
       }
     },
-    "ApiGatewayDeployment1623081888060": {
+    "ApiGatewayDeployment1623082215327": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1710,7 +1710,7 @@
     "AuthLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AuthLambdaVersionkPQn9aNlzv744PPyyWbCxyCH5qH0kjUjimx6EwTrw1s"
+        "Ref": "AuthLambdaVersion0neg4PIKT0GbL4TwuRtOJJU25qD0ppqU3Q5vwEpR1dk"
       },
       "Export": {
         "Name": "sls-crud-api-serverless-dev-AuthLambdaFunctionQualifiedArn"

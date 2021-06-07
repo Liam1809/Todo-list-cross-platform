@@ -26,7 +26,7 @@ custom:
 
 functions:
   Auth:
-    handler: src/middleware/auth.handlers
+    handler: src/middleware/auth.handler
   createNote:
     handler: src/lambdas/todoLists/createNote.handler
     events:
