@@ -1,4 +1,4 @@
-import { SET_SNACKBAR } from '../constants/constantTypes.js';
+import { SET_SNACKBAR } from '../constants/constantsType.js';
 
 export const setSnackBar = (
     snackbarOpen,

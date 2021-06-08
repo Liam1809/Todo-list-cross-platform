@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 
 import App from './components/App.js';
 import reducers from './reducers/index.js';
+import './index.css';
 
 // create main root storage to store the application state
 const store = createStore(reducers, compose(applyMiddleware(thunk)));

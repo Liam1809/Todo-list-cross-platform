@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://d8dzz6njlf.execute-api.us-east-1.amazonaws.com/dev' });
+const API = axios.create({
+    baseURL: 'https://d8dzz6njlf.execute-api.us-east-1.amazonaws.com/dev',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
 
 // send token back to server to verify authentication
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
-        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).profile.token}`;
     }
     console.log(req);
     return req;
@@ -13,7 +18,7 @@ API.interceptors.request.use((req) => {
 
 // API REQUESTS to retrieve TodoLists from server
 export const fetchNotes = () => API.get('/todoLists/get-notes');
-export const createNote = (newNote) => API.post('/todoLists/create-note', newHD);
+export const createNote = (newNote) => API.post('/todoLists/create-note', newNote);
 export const updateNote = (id, updatedNote) => API.patch(`/todoLists/update-note/${id}`, updatedNote);
 export const deleteNote = (id) => API.delete(`/todoLists/delete-note/${id}`);
 

@@ -10,3 +10,7 @@ export const LOGOUT = 'Sign Out';
 
 // notification
 export const SET_SNACKBAR = 'SET SNACKBAR';
+
+// navigtaions
+export const Home = 'Home';
+export const Dashboard = 'Dashboard';

@@ -1,4 +1,5 @@
 import * as api from '../api/index.js';
+// eslint-disable-next-line
 import { CREATE, FETCH, UPDATE, DELETE } from '../constants/constantsType.js';
 import { setSnackBar } from './snackbar.js';
 
@@ -29,7 +30,7 @@ export const createNote = (newNote) => async (dispatch) => {
 // update current note
 export const updateNote = (id, updatedNote) => async (dispatch) => {
     try {
-        const { data } = await api.updateNote(id, updateNote);
+        const { data } = await api.updateNote(id, updatedNote);
 
         dispatch({ type: UPDATE, payload: data });
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY UPDATED"));
@@ -42,7 +43,7 @@ export const updateNote = (id, updatedNote) => async (dispatch) => {
 // delete current note
 export const deleteNote = (id) => async (dispatch) => {
     try {
-        const { data } = await api.deleteNote(id);
+        await api.deleteNote(id);
 
         dispatch({ type: DELETE, payload: id });
         dispatch(setSnackBar(true, "success", "SUCCESSFULLY DELETED"));

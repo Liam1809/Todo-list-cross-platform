@@ -1,16 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles(({
     mainContainer: {
         maxWidth: 'inherit',
         background: 'white',
-        height: '100vh',
+        height: '80vh',
         borderRadius: 30,
         border: '1px solid rgba(0,0,0, 0.2)',
         paddingTop: 20,
         boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%) , 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
     },
-    table: {
-        minWidth: 650,
+    display: {
+        display: 'inline-block',
+        margin: '30px '
+    },
+    icon: {
+        width: '50%',
+        height: '50%',
+        padding: 10,
+        paddingLeft: 40
     },
 }));
