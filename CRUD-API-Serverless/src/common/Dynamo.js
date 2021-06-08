@@ -26,7 +26,7 @@ const Dynamo = {
 
         if (!data || !data.Items) return null;
 
-        return JSON.stringify(data.Items);
+        return data.Items;
     },
     delete: async (key, tableName) => {
 
@@ -56,13 +56,13 @@ const Dynamo = {
 
         const updatedData = await documentClient.update(params).promise();
 
-        return JSON.stringify(updatedData);
+        return updatedData.Attributes;
     },
     login: async (data, tableName) => {
         const existingUser = await checkExistingUser(data, tableName);
 
         // if user not register
-        if (!existingUser) return { message1: "USER NOT REGISTER" };
+        if (existingUser.length === 0) return { message1: "USER NOT REGISTER" };
 
         // if user exist then login
         const checkPassword = bcrypt.compareSync(data.password, existingUser[0].hashPassword);
@@ -71,8 +71,7 @@ const Dynamo = {
         if (!checkPassword) return { message2: "User or password not correct" };
 
         return {
-            "userName": existingUser.userName,
-            "id_User": existingUser.id_User
+            userName: data.userName
         };
     },
     register: async (data, tableName) => {

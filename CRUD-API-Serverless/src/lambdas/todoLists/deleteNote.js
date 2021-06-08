@@ -11,6 +11,8 @@ exports.handler = async (event) => {
     try {
         if (!event.pathParameters || !event.pathParameters.id_Note) return responses._400({ message: "Request has no id" });
 
+        if (event.userName) return responses._400({ message: "co event" });
+
         const idNote = event.pathParameters.id_Note;
 
         const noteDB = await Dynamo.delete(idNote, process.env.myDynamoDBTable1);

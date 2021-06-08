@@ -46,6 +46,8 @@ functions:
           path: todoLists/get-notes
           method: GET
           cors: true
+          authorizer:
+            name: Auth
   deleteNote:
     handler: src/lambdas/todoLists/deleteNote.handler
     events:

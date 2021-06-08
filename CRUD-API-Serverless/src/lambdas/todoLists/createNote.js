@@ -8,6 +8,7 @@ const Dynamo = require('../../common/Dynamo');
 
 exports.handler = async (event) => {
     try {
+
         if (!event.body) return responses._400({ message: "Request has no body" });
 
         const theNote = JSON.parse(event.body);

@@ -21,7 +21,7 @@ exports.handler = async (event) => {
         // sign jwt token
         const token = jwt.sign({ name: userDB.userName, userId: userDB.id_User }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        return responses._201({ profile: token, message: "successfull registered" });
+        return responses._201({ profile: { token: token, name: userDB.userName }, message: "successfull registered" });
     } catch (error) {
         console.log(error);
         return responses._400({ errorMessage: error.message });
